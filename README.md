@@ -16,8 +16,8 @@ CREATE DATABASE name_of_db -- создает базу данных
 
 ```sql
 CREATE TABLE name_of_table (
-    name_od_column1 data_type constraint,
-    name_od_column2 data_type constraint.
+    name_of_column1 data_type constraint,
+    name_of_column2 data_type constraint.
     ...
 ); -- создает таблицу с полями
 ```
