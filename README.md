@@ -11,7 +11,7 @@
 * `\q` -- выход
 
 ```sql
-CREATE DATABASE name_of_db -- создает базу данных
+CREATE DATABASE name_of_db; -- создает базу данных
 ```
 
 ```sql
@@ -42,16 +42,102 @@ CREATE TABLE author (
     id serial primary key,
     first_name varchar(50),
     last_name varchar(50)
-)
+);
 
 CREATE TABLE book (
     id serial,
     title varchar(100),
     published year,
     author_id int foreign key references author (id)
-)
+);
+```
+## виды связей(теория)
+> one to one -- (один к одному)
+например:
+
+* один автор -- одна биография
+
+* один флаг -- одна страна
+
+* один человек -- одно сердце
+
+
+> one to many -- (один ко многим)
+например:
+
+* один человек -- много клеток, но у одной клетки только один человек
+
+* одни родители -- много детей, но у одного ребенка только одни родители
+
+* один аккаунт -- много постов, но у одного поста только один автор (аккаунт)
+
+* один makers -- много maker'ов, но у одного maker'a только один makers
+
+
+> many to many -- (многие ко многим)
+например:
+
+* у человека много друзей и у одного друга много других друзей
+
+* у доктора много пациентов и у пациента много докторов
+
+* у пользователя много социальных сетей и у одной соцсети много пользователей
+
+
+## виды связей(практика)
+### one to one
+```sql
+CREATE TABLE flag (
+    id serial primary key,
+    photo text
+);
+
+CREATE TABLE country (
+    id serial primary key,
+    title varchar(50),
+    gimn text,
+    flag_id int unique foreign key fk_country_flag references flag(id)
+);
 ```
 
+### one to many
+```sql
+CREATE TABLE account (
+    id serial primary key,
+    nickname varchar(25) unique,
+    u_password varchar(255)
+);
+
+CREATE TABLE post (
+    id serial primary key,
+    title varchar(100),
+    body text,
+    photo text,
+    account_id int foreign key fk_post_account references account(id)
+);
+```
+
+### many to many
+```sql
+CREATE TABLE doctor (
+    id serial primary key,
+    first_name varchar(25),
+    last_name varchar(50)
+);
+
+CREATE TABLE patient (
+    id serial primary key,
+    first_name varchar(25),
+    last_name varchar(50)
+);
+
+CREATE TABLE doctor_patient (
+    doctor_id int foreign key fk_doktor references doctor(id),
+    patient_id int foreign key fk_patient references patient(id)
+);
+```
+
+## joins
 > JOIN -- инструкция, которая позволякт в запросах SELECT брать данные из нескольких таблиц
 
 > INNER JOIN (JOIN) -- когда достаются только те записи, у которых есть полная связь
@@ -65,5 +151,14 @@ CREATE TABLE book (
 ```sql
 SELECT author.first_name, book.title
 FROM author
-JOIN book ON author.id = book.author_id
+JOIN book ON author.id = book.author_id;
+```
+
+# import export данных
+write from file to db
+```bash
+psql db_name < file.sql
+```
+```bash
+
 ```
