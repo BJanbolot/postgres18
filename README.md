@@ -188,5 +188,5 @@ write from file to db
 psql db_name < file.sql
 ```
 ```bash
-
+pg_dump db_name > file.sql
 ```
